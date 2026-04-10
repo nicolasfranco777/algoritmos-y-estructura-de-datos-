@@ -1,37 +1,48 @@
 package javaapplication7;
-import java.util.Arrays;
-import java.util.stream.IntStream;
-
 public class JavaApplication7 {
-    
     public static void main(String[] args) {
-        // 1. Declaración
-        int[] a1 = {15, 23, 42, 7, 89, 34, 56};
-        int[] a2 = {15, 23, 42, 7, 89, 34, 56};
+        int[] a1 = {15, 23, 50, 7, 90, 34, 56};
+        int[] a2 = {15, 23, 50, 7, 90, 34, 56};
         
-        // 2. Comparación - UNA línea
-        boolean iguales = Arrays.equals(a1, a2);
+        // Mostrar arreglos manualmente
+        System.out.print("A1: [");
+        for (int i = 0; i < a1.length; i++) System.out.print(a1[i] + (i < a1.length-1 ? ", " : ""));
+        System.out.println("]");
         
-        // 3. Clonación - UNA línea
-        int[] clon = Arrays.copyOf(a1, a1.length);
+        System.out.print("A2: [");
+        for (int i = 0; i < a2.length; i++) System.out.print(a2[i] + (i < a2.length-1 ? ", " : ""));
+        System.out.println("]");
         
-        // 4. Fusión - UNA línea (Java 16+)
-        int[] fusion = IntStream.concat(Arrays.stream(a1), Arrays.stream(a2)).toArray();
+        // 2. Comparación detallada
+        System.out.println("\n--- COMPARACIoN ---");
+        boolean iguales = true;
+        for (int i = 0; i < a1.length; i++) {
+            if (a1[i] != a2[i]) {
+                System.out.println("  [" + i + "]: " + a1[i] + " vs " + a2[i] + " (dif: " + Math.abs(a1[i]-a2[i]) + ")");
+                iguales = false;
+            }
+        }
+        System.out.println(iguales ? " IDENTICOS" : " DIFERENTES");
         
-        // 5. Verificación - usando métodos de Arrays
-        System.out.println("=== RESULTADOS ===");
-        System.out.println("1. Comparación: " + iguales);
-        System.out.println("2. Clonación: " + Arrays.toString(clon));
-        System.out.println("3. Fusión: " + Arrays.toString(fusion));
-        System.out.println("4. Verificación clon: " + Arrays.equals(a1, clon));
-        System.out.println("5. Verificación fusión: " + (fusion.length == a1.length + a2.length));
+        // 3. Clonación
+        int[] clon = new int[a1.length];
+        for (int i = 0; i < a1.length; i++) clon[i] = a1[i];
         
-        // Demostrar independencia del clon
-        clon[0] = 999;
-        System.out.println("\nModificado clon[0]=999:");
-        System.out.println("Original: " + Arrays.toString(a1));
-        System.out.println("Clon: " + Arrays.toString(clon));
-        System.out.println("Son independientes: " + !Arrays.equals(a1, clon));
+        // Mostrar clon
+        System.out.print("\nClon: [");
+        for (int i = 0; i < clon.length; i++) System.out.print(clon[i] + (i < clon.length-1 ? ", " : ""));
+        System.out.println("]");
+        
+        // 4. Fusión
+        int[] fusion = new int[a1.length + a2.length];
+        for (int i = 0; i < a1.length; i++) fusion[i] = a1[i];
+        for (int i = 0; i < a2.length; i++) fusion[a1.length + i] = a2[i];
+        
+        // Mostrar fusión
+        System.out.print("Fusión: [");
+        for (int i = 0; i < fusion.length; i++) System.out.print(fusion[i] + (i < fusion.length-1 ? ", " : ""));
+        System.out.println("]");
+        
+    
     }
 }
-    
